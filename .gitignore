@@ -1,0 +1,8 @@
+node_modules/
+.next/
+__pycache__/
+*.pyc
+.env.production
+lms_demo.tar.gz
+lms_prod_files.tar.gz
+*.tar.gz

@@ -1,0 +1,18 @@
+# Production build - Next.js compiled and served with `next start`
+FROM node:20-slim AS build
+WORKDIR /srv
+COPY package.json .
+RUN npm install --no-audit --no-fund
+COPY . .
+ARG NEXT_PUBLIC_API_URL=https://lms.ottcode.com
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+RUN npm run build
+
+FROM node:20-slim
+WORKDIR /srv
+COPY --from=build /srv/package.json .
+COPY --from=build /srv/node_modules ./node_modules
+COPY --from=build /srv/.next ./.next
+COPY --from=build /srv/next.config.mjs .
+EXPOSE 3000
+CMD ["npm", "run", "start"]
