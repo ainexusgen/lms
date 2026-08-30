@@ -11,8 +11,8 @@ export default function Settings() {
   const isAdmin = getUser()?.role === "admin";
   const flash = (msg, err) => { setToast({ msg, err }); setTimeout(() => setToast(null), 2600); };
 
-  const load = () => api("/settings").then(setSettings).catch((e) => flash(e.message, true));
-  useEffect(load, []);
+  const load = () => { api("/settings").then(setSettings).catch((e) => flash(e.message, true)); };
+  useEffect(() => { load(); }, []);
 
   async function save(key) {
     try {

@@ -20,7 +20,7 @@ export default function Circulation() {
     src.then(setRows).catch((e) => flash(e.message, true));
   }, [tab]);
 
-  useEffect(load, [load]);
+  useEffect(() => { load(); }, [load]);
 
   async function renew(id) {
     try { const r = await api("/circulation/renew", { method: "POST", body: JSON.stringify({ loan_id: id }) }); flash(`Renewed — new due date ${r.new_due_date}`); load(); }
